@@ -2,7 +2,7 @@
 
 # BluBirdSong 
 
-This is a prototype RESTful backend webservice for a new social media platform, BluBirdSong. It accepts requests over HTTP to perform CRUD operations on post and replies. 
+BluBirdSong is a prototype RESTful backend webservice for a new social media platform, BluBirdSong. It accepts requests over HTTP to perform CRUD operations on post and replies. 
 
 ## Table of Contents
 1. Technologies
