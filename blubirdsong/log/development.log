@@ -1,46 +1,733 @@
-  [1m[35m (511.8ms)[0m  [1m[35mCREATE DATABASE "blubirdsong_development" ENCODING = 'unicode'[0m
-  [1m[35m (370.5ms)[0m  [1m[35mCREATE DATABASE "blubirdsong_test" ENCODING = 'unicode'[0m
-  [1m[35m (18.9ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY)[0m
-  [1m[35m (9.4ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
-  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_try_advisory_lock(1927229276263264050)[0m
-  [1m[36mActiveRecord::SchemaMigration Pluck (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
-Migrating to CreatePosts (20230802045944)
-  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
-  [1m[35m (13.0ms)[0m  [1m[35mCREATE TABLE "posts" ("id" bigserial primary key, "subject" character varying, "body" text NOT NULL, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
-  [1m[36mActiveRecord::SchemaMigration Create (0.4ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20230802045944"]]
-  [1m[36mTRANSACTION (5.5ms)[0m  [1m[35mCOMMIT[0m
-  [1m[36mActiveRecord::InternalMetadata Load (0.3ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
-  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
-  [1m[36mActiveRecord::InternalMetadata Create (0.4ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "key"[0m  [["key", "environment"], ["value", "development"], ["created_at", "2023-08-02 05:01:09.319556"], ["updated_at", "2023-08-02 05:01:09.319556"]]
-  [1m[36mTRANSACTION (2.6ms)[0m  [1m[35mCOMMIT[0m
-  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_advisory_unlock(1927229276263264050)[0m
-  [1m[36mActiveRecord::SchemaMigration Pluck (0.4ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
-  [1m[35m (0.2ms)[0m  [1m[34mSELECT pg_try_advisory_lock(1927229276263264050)[0m
-  [1m[36mActiveRecord::SchemaMigration Pluck (0.8ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
-Migrating to CreateReplies (20230802051129)
-  [1m[36mTRANSACTION (0.2ms)[0m  [1m[35mBEGIN[0m
-  [1m[35m (18.0ms)[0m  [1m[35mCREATE TABLE "replies" ("id" bigserial primary key, "body" text, "post_id" bigint NOT NULL, "parent_reply_id" bigint, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, CONSTRAINT "fk_rails_63380d423b"
+  [1m[35m (176.2ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY)[0m
+  [1m[35m (172.1ms)[0m  [1m[35mCREATE TABLE "schema_migrations" ("version" character varying NOT NULL PRIMARY KEY)[0m
+  [1m[35m (173.1ms)[0m  [1m[35mCREATE TABLE "ar_internal_metadata" ("key" character varying NOT NULL PRIMARY KEY, "value" character varying, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[35m (163.0ms)[0m  [1m[34mSELECT pg_try_advisory_lock(5542033432907799660)[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (166.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Migrating to CreatePosts (20230802222245)
+  [1m[36mTRANSACTION (163.3ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (170.4ms)[0m  [1m[35mCREATE TABLE "posts" ("id" bigserial primary key, "title" character varying, "body" text, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL)[0m
+  [1m[36mActiveRecord::SchemaMigration Create (162.7ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20230802222245"]]
+  [1m[36mTRANSACTION (166.8ms)[0m  [1m[35mCOMMIT[0m
+Migrating to CreateReplies (20230802225705)
+  [1m[36mTRANSACTION (163.8ms)[0m  [1m[35mBEGIN[0m
+  [1m[35m (180.3ms)[0m  [1m[35mCREATE TABLE "replies" ("id" bigserial primary key, "content" text, "post_id" bigint NOT NULL, "created_at" timestamp(6) NOT NULL, "updated_at" timestamp(6) NOT NULL, CONSTRAINT "fk_rails_63380d423b"
 FOREIGN KEY ("post_id")
   REFERENCES "posts" ("id")
-, CONSTRAINT "fk_rails_1905e1f603"
-FOREIGN KEY ("parent_reply_id")
-  REFERENCES "replies" ("id")
 )[0m
-  [1m[35m (7.8ms)[0m  [1m[35mCREATE INDEX "index_replies_on_post_id" ON "replies" ("post_id")[0m
-  [1m[35m (8.0ms)[0m  [1m[35mCREATE INDEX "index_replies_on_parent_reply_id" ON "replies" ("parent_reply_id")[0m
-  [1m[36mActiveRecord::SchemaMigration Create (0.5ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20230802051129"]]
-  [1m[36mTRANSACTION (3.5ms)[0m  [1m[35mCOMMIT[0m
-  [1m[36mActiveRecord::InternalMetadata Load (0.5ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
-  [1m[35m (0.3ms)[0m  [1m[34mSELECT pg_advisory_unlock(1927229276263264050)[0m
-  [1m[36mActiveRecord::SchemaMigration Pluck (0.7ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
-  [1m[36mTRANSACTION (0.4ms)[0m  [1m[35mBEGIN[0m
-  [1m[36mPost Create (0.8ms)[0m  [1m[32mINSERT INTO "posts" ("subject", "body", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["subject", "testtest"], ["body", "testtestetest"], ["created_at", "2023-08-02 05:54:43.166288"], ["updated_at", "2023-08-02 05:54:43.166288"]]
-  [1m[36mTRANSACTION (10.0ms)[0m  [1m[35mCOMMIT[0m
-  [1m[36mPost Load (0.5ms)[0m  [1m[34mSELECT "posts".* FROM "posts"[0m
-  [1m[36mPost Load (0.4ms)[0m  [1m[34mSELECT "posts".* FROM "posts" ORDER BY "posts"."id" ASC LIMIT $1[0m  [["LIMIT", 1]]
-  [1m[36mPost Load (0.4ms)[0m  [1m[34mSELECT "posts".* FROM "posts" ORDER BY "posts"."id" ASC LIMIT $1 OFFSET $2[0m  [["LIMIT", 1], ["OFFSET", 1]]
-  [1m[36mPost Load (0.6ms)[0m  [1m[34mSELECT "posts".* FROM "posts" ORDER BY "posts"."id" ASC LIMIT $1 OFFSET $2[0m  [["LIMIT", 1], ["OFFSET", 2]]
-  [1m[36mPost Load (0.3ms)[0m  [1m[34mSELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
-  [1m[36mPost Load (0.5ms)[0m  [1m[34mSELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
-  [1m[36mPost Destroy (9.9ms)[0m  [1m[31mDELETE FROM "posts" WHERE "posts"."id" = $1[0m  [["id", 1]]
-  [1m[36mPost Load (0.4ms)[0m  [1m[34mSELECT "posts".* FROM "posts"[0m
+  [1m[35m (173.0ms)[0m  [1m[35mCREATE INDEX "index_replies_on_post_id" ON "replies" ("post_id")[0m
+  [1m[36mActiveRecord::SchemaMigration Create (164.1ms)[0m  [1m[32mINSERT INTO "schema_migrations" ("version") VALUES ($1) RETURNING "version"[0m  [["version", "20230802225705"]]
+  [1m[36mTRANSACTION (164.0ms)[0m  [1m[35mCOMMIT[0m
+  [1m[36mActiveRecord::InternalMetadata Load (163.2ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[36mTRANSACTION (163.7ms)[0m  [1m[35mBEGIN[0m
+  [1m[36mActiveRecord::InternalMetadata Create (163.7ms)[0m  [1m[32mINSERT INTO "ar_internal_metadata" ("key", "value", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "key"[0m  [["key", "environment"], ["value", "development"], ["created_at", "2023-08-02 23:26:22.756184"], ["updated_at", "2023-08-02 23:26:22.756184"]]
+  [1m[36mTRANSACTION (163.8ms)[0m  [1m[35mCOMMIT[0m
+  [1m[35m (178.5ms)[0m  [1m[34mSELECT pg_advisory_unlock(5542033432907799660)[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (163.6ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Started GET "/api/posts" for 127.0.0.1 at 2023-08-03 04:27:22 +0500
+  [1m[36mActiveRecord::SchemaMigration Pluck (168.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  
+ActionController::RoutingError (uninitialized constant Api
+
+      Object.const_get(camel_cased_word)
+            ^^^^^^^^^^
+
+            raise MissingController.new(error.message, error.name)
+            ^^^^^):
+  
+Started GET "/api/posts" for 127.0.0.1 at 2023-08-03 04:30:01 +0500
+  [1m[36mActiveRecord::SchemaMigration Pluck (253.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  
+Zeitwerk::NameError (expected file C:/mohsin/ruby/blogs/app/controllers/api/posts_controller.rb to define constant Api::PostsController, but didn't
+
+      raise Zeitwerk::NameError.new(msg, cref.last)
+      ^^^^^):
+  
+zeitwerk (2.6.11) lib/zeitwerk/loader/callbacks.rb:25:in `on_file_autoloaded'
+zeitwerk (2.6.11) lib/zeitwerk/kernel.rb:31:in `require'
+activesupport (7.0.6) lib/active_support/inflector/methods.rb:278:in `const_get'
+activesupport (7.0.6) lib/active_support/inflector/methods.rb:278:in `constantize'
+activesupport (7.0.6) lib/active_support/core_ext/string/inflections.rb:74:in `constantize'
+actionpack (7.0.6) lib/action_dispatch/http/request.rb:90:in `controller_class_for'
+actionpack (7.0.6) lib/action_dispatch/request/utils.rb:95:in `action_encoding_template'
+actionpack (7.0.6) lib/action_dispatch/request/utils.rb:83:in `encode'
+actionpack (7.0.6) lib/action_dispatch/request/utils.rb:45:in `set_binary_encoding'
+actionpack (7.0.6) lib/action_dispatch/http/parameters.rb:68:in `path_parameters='
+actionpack (7.0.6) lib/action_dispatch/journey/router.rb:48:in `block in serve'
+actionpack (7.0.6) lib/action_dispatch/journey/router.rb:32:in `each'
+actionpack (7.0.6) lib/action_dispatch/journey/router.rb:32:in `serve'
+actionpack (7.0.6) lib/action_dispatch/routing/route_set.rb:852:in `call'
+rack (2.2.8) lib/rack/etag.rb:27:in `call'
+rack (2.2.8) lib/rack/conditional_get.rb:27:in `call'
+rack (2.2.8) lib/rack/head.rb:12:in `call'
+activerecord (7.0.6) lib/active_record/migration.rb:603:in `call'
+actionpack (7.0.6) lib/action_dispatch/middleware/callbacks.rb:27:in `block in call'
+activesupport (7.0.6) lib/active_support/callbacks.rb:99:in `run_callbacks'
+actionpack (7.0.6) lib/action_dispatch/middleware/callbacks.rb:26:in `call'
+actionpack (7.0.6) lib/action_dispatch/middleware/executor.rb:14:in `call'
+actionpack (7.0.6) lib/action_dispatch/middleware/actionable_exceptions.rb:17:in `call'
+actionpack (7.0.6) lib/action_dispatch/middleware/debug_exceptions.rb:28:in `call'
+actionpack (7.0.6) lib/action_dispatch/middleware/show_exceptions.rb:29:in `call'
+railties (7.0.6) lib/rails/rack/logger.rb:40:in `call_app'
+railties (7.0.6) lib/rails/rack/logger.rb:25:in `block in call'
+activesupport (7.0.6) lib/active_support/tagged_logging.rb:99:in `block in tagged'
+activesupport (7.0.6) lib/active_support/tagged_logging.rb:37:in `tagged'
+activesupport (7.0.6) lib/active_support/tagged_logging.rb:99:in `tagged'
+railties (7.0.6) lib/rails/rack/logger.rb:25:in `call'
+actionpack (7.0.6) lib/action_dispatch/middleware/remote_ip.rb:93:in `call'
+actionpack (7.0.6) lib/action_dispatch/middleware/request_id.rb:26:in `call'
+rack (2.2.8) lib/rack/runtime.rb:22:in `call'
+activesupport (7.0.6) lib/active_support/cache/strategy/local_cache_middleware.rb:29:in `call'
+actionpack (7.0.6) lib/action_dispatch/middleware/server_timing.rb:61:in `block in call'
+actionpack (7.0.6) lib/action_dispatch/middleware/server_timing.rb:26:in `collect_events'
+actionpack (7.0.6) lib/action_dispatch/middleware/server_timing.rb:60:in `call'
+actionpack (7.0.6) lib/action_dispatch/middleware/executor.rb:14:in `call'
+actionpack (7.0.6) lib/action_dispatch/middleware/static.rb:23:in `call'
+rack (2.2.8) lib/rack/sendfile.rb:110:in `call'
+actionpack (7.0.6) lib/action_dispatch/middleware/host_authorization.rb:137:in `call'
+railties (7.0.6) lib/rails/engine.rb:530:in `call'
+puma (5.6.6) lib/puma/configuration.rb:252:in `call'
+puma (5.6.6) lib/puma/request.rb:77:in `block in handle_request'
+puma (5.6.6) lib/puma/thread_pool.rb:340:in `with_force_shutdown'
+puma (5.6.6) lib/puma/request.rb:76:in `handle_request'
+puma (5.6.6) lib/puma/server.rb:443:in `process_client'
+puma (5.6.6) lib/puma/thread_pool.rb:147:in `block in spawn_thread'
+Started GET "/api/posts" for 127.0.0.1 at 2023-08-03 04:32:35 +0500
+  [1m[36mActiveRecord::SchemaMigration Pluck (167.5ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  
+AbstractController::ActionNotFound (The action 'index' could not be found for Api::PostsController):
+  
+actionpack (7.0.6) lib/abstract_controller/base.rb:146:in `process'
+actionpack (7.0.6) lib/action_controller/metal.rb:188:in `dispatch'
+actionpack (7.0.6) lib/action_controller/metal.rb:251:in `dispatch'
+actionpack (7.0.6) lib/action_dispatch/routing/route_set.rb:49:in `dispatch'
+actionpack (7.0.6) lib/action_dispatch/routing/route_set.rb:32:in `serve'
+actionpack (7.0.6) lib/action_dispatch/journey/router.rb:50:in `block in serve'
+actionpack (7.0.6) lib/action_dispatch/journey/router.rb:32:in `each'
+actionpack (7.0.6) lib/action_dispatch/journey/router.rb:32:in `serve'
+actionpack (7.0.6) lib/action_dispatch/routing/route_set.rb:852:in `call'
+rack (2.2.8) lib/rack/etag.rb:27:in `call'
+rack (2.2.8) lib/rack/conditional_get.rb:27:in `call'
+rack (2.2.8) lib/rack/head.rb:12:in `call'
+activerecord (7.0.6) lib/active_record/migration.rb:603:in `call'
+actionpack (7.0.6) lib/action_dispatch/middleware/callbacks.rb:27:in `block in call'
+activesupport (7.0.6) lib/active_support/callbacks.rb:99:in `run_callbacks'
+actionpack (7.0.6) lib/action_dispatch/middleware/callbacks.rb:26:in `call'
+actionpack (7.0.6) lib/action_dispatch/middleware/executor.rb:14:in `call'
+actionpack (7.0.6) lib/action_dispatch/middleware/actionable_exceptions.rb:17:in `call'
+actionpack (7.0.6) lib/action_dispatch/middleware/debug_exceptions.rb:28:in `call'
+actionpack (7.0.6) lib/action_dispatch/middleware/show_exceptions.rb:29:in `call'
+railties (7.0.6) lib/rails/rack/logger.rb:40:in `call_app'
+railties (7.0.6) lib/rails/rack/logger.rb:25:in `block in call'
+activesupport (7.0.6) lib/active_support/tagged_logging.rb:99:in `block in tagged'
+activesupport (7.0.6) lib/active_support/tagged_logging.rb:37:in `tagged'
+activesupport (7.0.6) lib/active_support/tagged_logging.rb:99:in `tagged'
+railties (7.0.6) lib/rails/rack/logger.rb:25:in `call'
+actionpack (7.0.6) lib/action_dispatch/middleware/remote_ip.rb:93:in `call'
+actionpack (7.0.6) lib/action_dispatch/middleware/request_id.rb:26:in `call'
+rack (2.2.8) lib/rack/runtime.rb:22:in `call'
+activesupport (7.0.6) lib/active_support/cache/strategy/local_cache_middleware.rb:29:in `call'
+actionpack (7.0.6) lib/action_dispatch/middleware/server_timing.rb:61:in `block in call'
+actionpack (7.0.6) lib/action_dispatch/middleware/server_timing.rb:26:in `collect_events'
+actionpack (7.0.6) lib/action_dispatch/middleware/server_timing.rb:60:in `call'
+actionpack (7.0.6) lib/action_dispatch/middleware/executor.rb:14:in `call'
+actionpack (7.0.6) lib/action_dispatch/middleware/static.rb:23:in `call'
+rack (2.2.8) lib/rack/sendfile.rb:110:in `call'
+actionpack (7.0.6) lib/action_dispatch/middleware/host_authorization.rb:137:in `call'
+railties (7.0.6) lib/rails/engine.rb:530:in `call'
+puma (5.6.6) lib/puma/configuration.rb:252:in `call'
+puma (5.6.6) lib/puma/request.rb:77:in `block in handle_request'
+puma (5.6.6) lib/puma/thread_pool.rb:340:in `with_force_shutdown'
+puma (5.6.6) lib/puma/request.rb:76:in `handle_request'
+puma (5.6.6) lib/puma/server.rb:443:in `process_client'
+puma (5.6.6) lib/puma/thread_pool.rb:147:in `block in spawn_thread'
+Started GET "/api/posts" for 127.0.0.1 at 2023-08-03 04:37:02 +0500
+  [1m[36mActiveRecord::SchemaMigration Pluck (164.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by Api::PostsController#index as */*
+  [1m[36mPost Load (167.6ms)[0m  [1m[34mSELECT "posts".* FROM "posts" ORDER BY "posts"."created_at" DESC[0m
+  ↳ app/controllers/api/posts_controller.rb:5:in `index'
+Completed 200 OK in 674ms (Views: 50.3ms | ActiveRecord: 496.8ms | Allocations: 8925)
+
+
+Started GET "/api/posts" for 127.0.0.1 at 2023-08-03 04:38:16 +0500
+Processing by Api::PostsController#index as */*
+  [1m[36mPost Load (162.8ms)[0m  [1m[34mSELECT "posts".* FROM "posts" ORDER BY "posts"."created_at" DESC[0m
+  ↳ app/controllers/api/posts_controller.rb:10:in `index'
+Completed 200 OK in 498ms (Views: 2.6ms | ActiveRecord: 326.6ms | Allocations: 2726)
+
+
+Started POST "/api/posts/create" for 127.0.0.1 at 2023-08-03 04:39:17 +0500
+  
+ActionController::RoutingError (No route matches [POST] "/api/posts/create"):
+  
+Started POST "/api/posts" for 127.0.0.1 at 2023-08-03 04:39:46 +0500
+Processing by Api::PostsController#create as */*
+Completed 422 Unprocessable Entity in 576ms (Views: 0.1ms | ActiveRecord: 339.2ms | Allocations: 6806)
+
+
+Started POST "/api/posts" for 127.0.0.1 at 2023-08-03 04:40:22 +0500
+Processing by Api::PostsController#create as */*
+  Parameters: {"title"=>"Test Post", "body"=>"The body of the post", "post"=>{"title"=>"Test Post", "body"=>"The body of the post"}}
+[31mUnpermitted parameter: :post. Context: { controller: Api::PostsController, action: create, request: #<ActionDispatch::Request:0x000001e6321f1db8>, params: {"title"=>"Test Post", "body"=>"The body of the post", "controller"=>"api/posts", "action"=>"create", "post"=>{"title"=>"Test Post", "body"=>"The body of the post"}} }[0m
+  [1m[36mTRANSACTION (163.8ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/posts_controller.rb:18:in `create'
+  [1m[36mPost Create (165.0ms)[0m  [1m[32mINSERT INTO "posts" ("title", "body", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Test Post"], ["body", "The body of the post"], ["created_at", "2023-08-02 23:40:22.328007"], ["updated_at", "2023-08-02 23:40:22.328007"]]
+  ↳ app/controllers/api/posts_controller.rb:18:in `create'
+  [1m[36mTRANSACTION (164.3ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/posts_controller.rb:18:in `create'
+Completed 201 Created in 687ms (Views: 2.6ms | ActiveRecord: 493.1ms | Allocations: 2910)
+
+
+Started GET "/api/posts" for 127.0.0.1 at 2023-08-03 04:40:37 +0500
+Processing by Api::PostsController#index as */*
+  [1m[36mPost Load (171.1ms)[0m  [1m[34mSELECT "posts".* FROM "posts" ORDER BY "posts"."created_at" DESC[0m
+  ↳ app/controllers/api/posts_controller.rb:10:in `index'
+  [1m[36mReply Load (166.2ms)[0m  [1m[34mSELECT "replies".* FROM "replies" WHERE "replies"."post_id" = $1[0m  [["post_id", 1]]
+  ↳ app/controllers/api/posts_controller.rb:10:in `index'
+Completed 200 OK in 1117ms (Views: 284.5ms | ActiveRecord: 673.1ms | Allocations: 8509)
+
+
+Started GET "/api/posts/1" for 127.0.0.1 at 2023-08-03 04:40:52 +0500
+Processing by Api::PostsController#show as */*
+  Parameters: {"id"=>"1"}
+  [1m[36mPost Load (163.7ms)[0m  [1m[34mSELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/api/posts_controller.rb:14:in `show'
+  [1m[36mReply Load (163.5ms)[0m  [1m[34mSELECT "replies".* FROM "replies" WHERE "replies"."post_id" = $1[0m  [["post_id", 1]]
+  ↳ app/controllers/api/posts_controller.rb:14:in `show'
+Completed 200 OK in 672ms (Views: 1.6ms | ActiveRecord: 327.2ms | Allocations: 1868)
+
+
+Started GET "/api/save-reply/1" for 127.0.0.1 at 2023-08-03 04:41:47 +0500
+  
+ActionController::RoutingError (No route matches [GET] "/api/save-reply/1"):
+  
+Started GET "/api/save-reply/1" for 127.0.0.1 at 2023-08-03 04:42:17 +0500
+  
+ActionController::RoutingError (No route matches [GET] "/api/save-reply/1"):
+  
+Started GET "/api/save-reply/1" for 127.0.0.1 at 2023-08-03 04:44:13 +0500
+  
+ActionController::RoutingError (No route matches [GET] "/api/save-reply/1"):
+  
+Started GET "/api/save-reply/1" for 127.0.0.1 at 2023-08-03 04:45:46 +0500
+  
+ActionController::RoutingError (No route matches [GET] "/api/save-reply/1"):
+  
+Started POST "/api/save-reply/1" for 127.0.0.1 at 2023-08-03 04:46:08 +0500
+  [1m[36mActiveRecord::SchemaMigration Pluck (165.3ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  
+ActionController::RoutingError (uninitialized constant Api::Api
+
+      Object.const_get(camel_cased_word)
+            ^^^^^^^^^^
+
+            raise MissingController.new(error.message, error.name)
+            ^^^^^):
+  
+Started POST "/api/save-reply/1" for 127.0.0.1 at 2023-08-03 04:46:55 +0500
+Processing by Api::RepliesController#create as */*
+  Parameters: {"content"=>"the first reply", "id"=>"1", "reply"=>{"content"=>"the first reply"}}
+Completed 404 Not Found in 219ms (ActiveRecord: 664.7ms | Allocations: 6125)
+
+
+  
+ActiveRecord::RecordNotFound (Couldn't find Post without an ID):
+  
+app/controllers/api/replies_controller.rb:5:in `create'
+Started GET "/api/posts/1" for 127.0.0.1 at 2023-08-03 04:47:17 +0500
+Processing by Api::PostsController#show as */*
+  Parameters: {"id"=>"1"}
+  [1m[36mPost Load (163.7ms)[0m  [1m[34mSELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/api/posts_controller.rb:14:in `show'
+  [1m[36mReply Load (164.4ms)[0m  [1m[34mSELECT "replies".* FROM "replies" WHERE "replies"."post_id" = $1[0m  [["post_id", 1]]
+  ↳ app/controllers/api/posts_controller.rb:14:in `show'
+Completed 200 OK in 1250ms (Views: 3.9ms | ActiveRecord: 658.6ms | Allocations: 11546)
+
+
+Started POST "/api/save-reply/1" for 127.0.0.1 at 2023-08-03 04:47:54 +0500
+Processing by Api::RepliesController#create as */*
+  Parameters: {"content"=>"the first reply", "post_id"=>"1", "reply"=>{"content"=>"the first reply"}}
+  [1m[36mPost Load (171.9ms)[0m  [1m[34mSELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/api/replies_controller.rb:5:in `create'
+[31mUnpermitted parameters: :post_id, :reply. Context: { controller: Api::RepliesController, action: create, request: #<ActionDispatch::Request:0x000002e501fbdd38>, params: {"content"=>"the first reply", "controller"=>"api/replies", "action"=>"create", "post_id"=>"1", "reply"=>{"content"=>"the first reply"}} }[0m
+  [1m[36mTRANSACTION (170.4ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/replies_controller.rb:8:in `create'
+  [1m[36mReply Create (164.5ms)[0m  [1m[32mINSERT INTO "replies" ("content", "post_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["content", "the first reply"], ["post_id", 1], ["created_at", "2023-08-02 23:47:57.589274"], ["updated_at", "2023-08-02 23:47:57.589274"]]
+  ↳ app/controllers/api/replies_controller.rb:8:in `create'
+  [1m[36mTRANSACTION (168.0ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/replies_controller.rb:8:in `create'
+Completed 200 OK in 1366ms (Views: 1.1ms | ActiveRecord: 1503.0ms | Allocations: 10229)
+
+
+Started GET "/api/posts" for 127.0.0.1 at 2023-08-03 04:48:02 +0500
+Processing by Api::PostsController#index as */*
+  [1m[36mPost Load (165.5ms)[0m  [1m[34mSELECT "posts".* FROM "posts" ORDER BY "posts"."created_at" DESC[0m
+  ↳ app/controllers/api/posts_controller.rb:10:in `index'
+  [1m[36mReply Load (163.3ms)[0m  [1m[34mSELECT "replies".* FROM "replies" WHERE "replies"."post_id" = $1[0m  [["post_id", 1]]
+  ↳ app/controllers/api/posts_controller.rb:10:in `index'
+Completed 200 OK in 512ms (Views: 15.6ms | ActiveRecord: 328.8ms | Allocations: 2389)
+
+
+Started GET "/api/replies/1" for 127.0.0.1 at 2023-08-03 04:50:15 +0500
+Processing by Api::RepliesController#index as */*
+  Parameters: {"post_id"=>"1"}
+  [1m[36mPost Load (166.0ms)[0m  [1m[34mSELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/api/replies_controller.rb:16:in `index'
+  [1m[36mReply Load (164.5ms)[0m  [1m[34mSELECT "replies".* FROM "replies" WHERE "replies"."post_id" = $1[0m  [["post_id", 1]]
+  ↳ app/controllers/api/replies_controller.rb:18:in `index'
+Completed 200 OK in 1368ms (Views: 12.7ms | ActiveRecord: 1165.5ms | Allocations: 7550)
+
+
+Started PUT "/api/posts/1" for 127.0.0.1 at 2023-08-03 04:58:46 +0500
+Processing by Api::PostsController#update as */*
+  Parameters: {"title"=>"Edited Title", "body"=>"Edited body......", "id"=>"1", "post"=>{"title"=>"Edited Title", "body"=>"Edited body......"}}
+  [1m[36mPost Load (163.9ms)[0m  [1m[34mSELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/api/posts_controller.rb:23:in `update'
+[31mUnpermitted parameters: :id, :post. Context: { controller: Api::PostsController, action: update, request: #<ActionDispatch::Request:0x000002e5008ce730>, params: {"title"=>"Edited Title", "body"=>"Edited body......", "controller"=>"api/posts", "action"=>"update", "id"=>"1", "post"=>{"title"=>"Edited Title", "body"=>"Edited body......"}} }[0m
+  [1m[36mTRANSACTION (165.4ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/posts_controller.rb:24:in `update'
+  [1m[36mPost Update (163.3ms)[0m  [1m[33mUPDATE "posts" SET "title" = $1, "body" = $2, "updated_at" = $3 WHERE "posts"."id" = $4[0m  [["title", "Edited Title"], ["body", "Edited body......"], ["updated_at", "2023-08-02 23:58:51.996825"], ["id", 1]]
+  ↳ app/controllers/api/posts_controller.rb:24:in `update'
+  [1m[36mTRANSACTION (164.2ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/posts_controller.rb:24:in `update'
+Completed 200 OK in 1024ms (Views: 0.7ms | ActiveRecord: 2971.3ms | Allocations: 4664)
+
+
+Started DELETE "/api/posts/1" for 127.0.0.1 at 2023-08-03 04:59:12 +0500
+Processing by Api::PostsController#destroy as */*
+  Parameters: {"id"=>"1"}
+  [1m[36mPost Load (165.3ms)[0m  [1m[34mSELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/api/posts_controller.rb:30:in `destroy'
+  [1m[36mTRANSACTION (163.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/posts_controller.rb:30:in `destroy'
+  [1m[36mReply Load (164.3ms)[0m  [1m[34mSELECT "replies".* FROM "replies" WHERE "replies"."post_id" = $1[0m  [["post_id", 1]]
+  ↳ app/controllers/api/posts_controller.rb:30:in `destroy'
+  [1m[36mReply Destroy (162.9ms)[0m  [1m[31mDELETE FROM "replies" WHERE "replies"."id" = $1[0m  [["id", 1]]
+  ↳ app/controllers/api/posts_controller.rb:30:in `destroy'
+  [1m[36mPost Destroy (167.0ms)[0m  [1m[31mDELETE FROM "posts" WHERE "posts"."id" = $1[0m  [["id", 1]]
+  ↳ app/controllers/api/posts_controller.rb:30:in `destroy'
+  [1m[36mTRANSACTION (164.5ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/posts_controller.rb:30:in `destroy'
+Completed 200 OK in 1375ms (Views: 0.3ms | ActiveRecord: 987.1ms | Allocations: 6442)
+
+
+Started POST "/api/posts" for 127.0.0.1 at 2023-08-03 05:37:53 +0500
+  [1m[36mActiveRecord::SchemaMigration Pluck (207.8ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by Api::PostsController#create as */*
+  Parameters: {"title"=>"Test Post", "body"=>"The body of the post", "post"=>{"title"=>"Test Post", "body"=>"The body of the post"}}
+[31mUnpermitted parameter: :post. Context: { controller: Api::PostsController, action: create, request: #<ActionDispatch::Request:0x0000025fe5d12f30>, params: {"title"=>"Test Post", "body"=>"The body of the post", "controller"=>"api/posts", "action"=>"create", "post"=>{"title"=>"Test Post", "body"=>"The body of the post"}} }[0m
+  [1m[36mTRANSACTION (158.5ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/posts_controller.rb:18:in `create'
+  [1m[36mPost Create (146.0ms)[0m  [1m[32mINSERT INTO "posts" ("title", "body", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Test Post"], ["body", "The body of the post"], ["created_at", "2023-08-03 00:38:02.498884"], ["updated_at", "2023-08-03 00:38:02.498884"]]
+  ↳ app/controllers/api/posts_controller.rb:18:in `create'
+  [1m[36mTRANSACTION (158.5ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/posts_controller.rb:18:in `create'
+Completed 201 Created in 884ms (Views: 1.0ms | ActiveRecord: 1446.5ms | Allocations: 10704)
+
+
+Started POST "/api/save-reply/2" for 127.0.0.1 at 2023-08-03 05:38:17 +0500
+Processing by Api::RepliesController#create as */*
+  Parameters: {"content"=>"the first reply", "post_id"=>"2", "reply"=>{"content"=>"the first reply"}}
+  [1m[36mPost Load (204.8ms)[0m  [1m[34mSELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/api/replies_controller.rb:5:in `create'
+[31mUnpermitted parameters: :post_id, :reply. Context: { controller: Api::RepliesController, action: create, request: #<ActionDispatch::Request:0x0000025fe957a850>, params: {"content"=>"the first reply", "controller"=>"api/replies", "action"=>"create", "post_id"=>"2", "reply"=>{"content"=>"the first reply"}} }[0m
+  [1m[36mTRANSACTION (326.8ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/replies_controller.rb:8:in `create'
+  [1m[36mReply Create (159.8ms)[0m  [1m[32mINSERT INTO "replies" ("content", "post_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["content", "the first reply"], ["post_id", 2], ["created_at", "2023-08-03 00:38:19.490838"], ["updated_at", "2023-08-03 00:38:19.490838"]]
+  ↳ app/controllers/api/replies_controller.rb:8:in `create'
+  [1m[36mTRANSACTION (242.9ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/replies_controller.rb:8:in `create'
+Completed 200 OK in 2253ms (Views: 0.5ms | ActiveRecord: 1791.9ms | Allocations: 10932)
+
+
+Started GET "/api/replies/2" for 127.0.0.1 at 2023-08-03 05:38:34 +0500
+Processing by Api::RepliesController#index as */*
+  Parameters: {"post_id"=>"2"}
+  [1m[36mPost Load (306.1ms)[0m  [1m[34mSELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/api/replies_controller.rb:16:in `index'
+  [1m[36mReply Load (159.1ms)[0m  [1m[34mSELECT "replies".* FROM "replies" WHERE "replies"."post_id" = $1[0m  [["post_id", 2]]
+  ↳ app/controllers/api/replies_controller.rb:18:in `index'
+Completed 200 OK in 993ms (Views: 307.8ms | ActiveRecord: 465.1ms | Allocations: 1966)
+
+
+Started POST "/api/save-reply/2" for 127.0.0.1 at 2023-08-03 05:39:07 +0500
+Processing by Api::RepliesController#create as */*
+  Parameters: {"content"=>"the first reply", "post_id"=>"2", "reply"=>{"content"=>"the first reply"}}
+  [1m[36mPost Load (202.2ms)[0m  [1m[34mSELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/api/replies_controller.rb:5:in `create'
+[31mUnpermitted parameters: :post_id, :reply. Context: { controller: Api::RepliesController, action: create, request: #<ActionDispatch::Request:0x0000025fea5370e0>, params: {"content"=>"the first reply", "controller"=>"api/replies", "action"=>"create", "post_id"=>"2", "reply"=>{"content"=>"the first reply"}} }[0m
+  [1m[36mTRANSACTION (158.3ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/replies_controller.rb:8:in `create'
+  [1m[36mReply Create (199.0ms)[0m  [1m[32mINSERT INTO "replies" ("content", "post_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["content", "the first reply"], ["post_id", 2], ["created_at", "2023-08-03 00:39:11.985233"], ["updated_at", "2023-08-03 00:39:11.985233"]]
+  ↳ app/controllers/api/replies_controller.rb:8:in `create'
+  [1m[36mTRANSACTION (402.3ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/replies_controller.rb:8:in `create'
+Completed 200 OK in 1746ms (Views: 3.3ms | ActiveRecord: 2075.7ms | Allocations: 7167)
+
+
+Started POST "/api/reply/2" for 127.0.0.1 at 2023-08-03 05:39:56 +0500
+  
+ActionController::RoutingError (No route matches [POST] "/api/reply/2"):
+  
+Started PUT "/api/reply/2" for 127.0.0.1 at 2023-08-03 05:40:13 +0500
+Processing by Api::RepliesController#update as */*
+  Parameters: {"content"=>"edited reply", "id"=>"2", "reply"=>{"content"=>"edited reply"}}
+[31mUnpermitted parameters: :id, :reply. Context: { controller: Api::RepliesController, action: update, request: #<ActionDispatch::Request:0x0000025fea7a6e48>, params: {"content"=>"edited reply", "controller"=>"api/replies", "action"=>"update", "id"=>"2", "reply"=>{"content"=>"edited reply"}} }[0m
+Completed 500 Internal Server Error in 4ms (ActiveRecord: 0.0ms | Allocations: 1193)
+
+
+  
+NoMethodError (undefined method `update' for nil:NilClass
+
+            if @reply.update(reply_params)
+                     ^^^^^^^):
+  
+app/controllers/api/replies_controller.rb:26:in `update'
+Started PUT "/api/reply/2" for 127.0.0.1 at 2023-08-03 05:41:25 +0500
+Processing by Api::RepliesController#update as */*
+  Parameters: {"content"=>"edited reply", "id"=>"2", "reply"=>{"content"=>"edited reply"}}
+  [1m[36mReply Load (201.9ms)[0m  [1m[34mSELECT "replies".* FROM "replies" WHERE "replies"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/api/replies_controller.rb:46:in `set_reply'
+[31mUnpermitted parameters: :id, :reply. Context: { controller: Api::RepliesController, action: update, request: #<ActionDispatch::Request:0x0000025fe79a2d58>, params: {"content"=>"edited reply", "controller"=>"api/replies", "action"=>"update", "id"=>"2", "reply"=>{"content"=>"edited reply"}} }[0m
+  [1m[36mTRANSACTION (271.3ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/replies_controller.rb:28:in `update'
+  [1m[36mPost Load (158.7ms)[0m  [1m[34mSELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/api/replies_controller.rb:28:in `update'
+  [1m[36mReply Update (159.3ms)[0m  [1m[33mUPDATE "replies" SET "content" = $1, "updated_at" = $2 WHERE "replies"."id" = $3[0m  [["content", "edited reply"], ["updated_at", "2023-08-03 00:41:30.531550"], ["id", 2]]
+  ↳ app/controllers/api/replies_controller.rb:28:in `update'
+  [1m[36mTRANSACTION (293.7ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/replies_controller.rb:28:in `update'
+Completed 200 OK in 2052ms (Views: 2.8ms | ActiveRecord: 2195.7ms | Allocations: 8479)
+
+
+Started GET "/api/reply/2" for 127.0.0.1 at 2023-08-03 05:43:53 +0500
+Processing by Api::RepliesController#show as */*
+  Parameters: {"id"=>"2"}
+  [1m[36mReply Load (197.5ms)[0m  [1m[34mSELECT "replies".* FROM "replies" WHERE "replies"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/api/replies_controller.rb:46:in `set_reply'
+Completed 200 OK in 1102ms (Views: 2.7ms | ActiveRecord: 907.4ms | Allocations: 3847)
+
+
+Started DELETE "/api/reply/2" for 127.0.0.1 at 2023-08-03 05:44:34 +0500
+Processing by Api::RepliesController#destroy as */*
+  Parameters: {"id"=>"2"}
+  [1m[36mReply Load (160.5ms)[0m  [1m[34mSELECT "replies".* FROM "replies" WHERE "replies"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/api/replies_controller.rb:46:in `set_reply'
+  [1m[36mTRANSACTION (160.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/replies_controller.rb:36:in `destroy'
+  [1m[36mReply Destroy (163.7ms)[0m  [1m[31mDELETE FROM "replies" WHERE "replies"."id" = $1[0m  [["id", 2]]
+  ↳ app/controllers/api/replies_controller.rb:36:in `destroy'
+  [1m[36mTRANSACTION (208.6ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/replies_controller.rb:36:in `destroy'
+Completed 200 OK in 1005ms (Views: 0.5ms | ActiveRecord: 693.1ms | Allocations: 2116)
+
+
+Started GET "/api/reply/2" for 127.0.0.1 at 2023-08-03 05:47:09 +0500
+Processing by Api::RepliesController#show as */*
+  Parameters: {"id"=>"2"}
+  [1m[36mReply Load (204.2ms)[0m  [1m[34mSELECT "replies".* FROM "replies" WHERE "replies"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/api/replies_controller.rb:46:in `set_reply'
+Completed 404 Not Found in 500ms (ActiveRecord: 204.2ms | Allocations: 578)
+
+
+  
+ActiveRecord::RecordNotFound (Couldn't find Reply with 'id'=2):
+  
+app/controllers/api/replies_controller.rb:46:in `set_reply'
+Started GET "/api/posts/1" for 127.0.0.1 at 2023-08-03 05:48:02 +0500
+Processing by Api::PostsController#show as */*
+  Parameters: {"id"=>"1"}
+  [1m[36mPost Load (199.9ms)[0m  [1m[34mSELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/api/posts_controller.rb:14:in `show'
+Completed 404 Not Found in 915ms (Views: 0.6ms | ActiveRecord: 629.9ms | Allocations: 3550)
+
+
+Started GET "/api/reply/2" for 127.0.0.1 at 2023-08-03 05:48:47 +0500
+Processing by Api::RepliesController#show as */*
+  Parameters: {"id"=>"2"}
+  [1m[36mReply Load (291.0ms)[0m  [1m[34mSELECT "replies".* FROM "replies" WHERE "replies"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/api/replies_controller.rb:50:in `set_reply'
+Completed 404 Not Found in 1333ms (Views: 0.6ms | ActiveRecord: 928.9ms | Allocations: 2613)
+
+
+Started GET "/api/reply/2" for 127.0.0.1 at 2023-08-03 05:49:02 +0500
+Processing by Api::RepliesController#show as */*
+  Parameters: {"id"=>"2"}
+  [1m[36mReply Load (202.3ms)[0m  [1m[34mSELECT "replies".* FROM "replies" WHERE "replies"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/api/replies_controller.rb:50:in `set_reply'
+Completed 404 Not Found in 1148ms (Views: 1.0ms | ActiveRecord: 915.8ms | Allocations: 2617)
+
+
+Started GET "/" for ::1 at 2023-08-02 21:51:19 -0400
+  [1m[36mActiveRecord::SchemaMigration Pluck (106.8ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  
+ActiveRecord::DuplicateMigrationNameError (
+
+Multiple migrations have the name CreatePosts.
+
+):
+  
+activerecord (7.0.6) lib/active_record/migration.rb:1384:in `validate'
+activerecord (7.0.6) lib/active_record/migration.rb:1257:in `initialize'
+activerecord (7.0.6) lib/active_record/migration.rb:1135:in `new'
+activerecord (7.0.6) lib/active_record/migration.rb:1135:in `open'
+activerecord (7.0.6) lib/active_record/migration.rb:156:in `detailed_migration_message'
+activerecord (7.0.6) lib/active_record/migration.rb:147:in `initialize'
+activerecord (7.0.6) lib/active_record/migration.rb:627:in `exception'
+activerecord (7.0.6) lib/active_record/migration.rb:627:in `raise'
+activerecord (7.0.6) lib/active_record/migration.rb:627:in `check_pending!'
+activerecord (7.0.6) lib/active_record/migration.rb:592:in `block (2 levels) in call'
+activesupport (7.0.6) lib/active_support/file_update_checker.rb:83:in `execute'
+activerecord (7.0.6) lib/active_record/migration.rb:597:in `block in call'
+activerecord (7.0.6) lib/active_record/migration.rb:589:in `synchronize'
+activerecord (7.0.6) lib/active_record/migration.rb:589:in `call'
+actionpack (7.0.6) lib/action_dispatch/middleware/callbacks.rb:27:in `block in call'
+activesupport (7.0.6) lib/active_support/callbacks.rb:99:in `run_callbacks'
+actionpack (7.0.6) lib/action_dispatch/middleware/callbacks.rb:26:in `call'
+actionpack (7.0.6) lib/action_dispatch/middleware/executor.rb:14:in `call'
+actionpack (7.0.6) lib/action_dispatch/middleware/actionable_exceptions.rb:17:in `call'
+actionpack (7.0.6) lib/action_dispatch/middleware/debug_exceptions.rb:28:in `call'
+actionpack (7.0.6) lib/action_dispatch/middleware/show_exceptions.rb:29:in `call'
+railties (7.0.6) lib/rails/rack/logger.rb:40:in `call_app'
+railties (7.0.6) lib/rails/rack/logger.rb:25:in `block in call'
+activesupport (7.0.6) lib/active_support/tagged_logging.rb:99:in `block in tagged'
+activesupport (7.0.6) lib/active_support/tagged_logging.rb:37:in `tagged'
+activesupport (7.0.6) lib/active_support/tagged_logging.rb:99:in `tagged'
+railties (7.0.6) lib/rails/rack/logger.rb:25:in `call'
+actionpack (7.0.6) lib/action_dispatch/middleware/remote_ip.rb:93:in `call'
+actionpack (7.0.6) lib/action_dispatch/middleware/request_id.rb:26:in `call'
+rack (2.2.8) lib/rack/runtime.rb:22:in `call'
+activesupport (7.0.6) lib/active_support/cache/strategy/local_cache_middleware.rb:29:in `call'
+actionpack (7.0.6) lib/action_dispatch/middleware/server_timing.rb:61:in `block in call'
+actionpack (7.0.6) lib/action_dispatch/middleware/server_timing.rb:26:in `collect_events'
+actionpack (7.0.6) lib/action_dispatch/middleware/server_timing.rb:60:in `call'
+actionpack (7.0.6) lib/action_dispatch/middleware/executor.rb:14:in `call'
+actionpack (7.0.6) lib/action_dispatch/middleware/static.rb:23:in `call'
+rack (2.2.8) lib/rack/sendfile.rb:110:in `call'
+actionpack (7.0.6) lib/action_dispatch/middleware/host_authorization.rb:137:in `call'
+railties (7.0.6) lib/rails/engine.rb:530:in `call'
+puma (5.6.6) lib/puma/configuration.rb:252:in `call'
+puma (5.6.6) lib/puma/request.rb:77:in `block in handle_request'
+puma (5.6.6) lib/puma/thread_pool.rb:340:in `with_force_shutdown'
+puma (5.6.6) lib/puma/request.rb:76:in `handle_request'
+puma (5.6.6) lib/puma/server.rb:443:in `process_client'
+puma (5.6.6) lib/puma/thread_pool.rb:147:in `block in spawn_thread'
+  [1m[35m (102.6ms)[0m  [1m[34mSELECT pg_try_advisory_lock(5542033432907799660)[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (106.9ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  [1m[36mActiveRecord::InternalMetadata Load (103.1ms)[0m  [1m[34mSELECT "ar_internal_metadata".* FROM "ar_internal_metadata" WHERE "ar_internal_metadata"."key" = $1 LIMIT $2[0m  [["key", "environment"], ["LIMIT", 1]]
+  [1m[35m (102.6ms)[0m  [1m[34mSELECT pg_advisory_unlock(5542033432907799660)[0m
+  [1m[36mActiveRecord::SchemaMigration Pluck (104.1ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Started POST "/api/save-reply/2" for 127.0.0.1 at 2023-08-02 21:52:25 -0400
+  [1m[36mActiveRecord::SchemaMigration Pluck (104.2ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+  
+ActionController::RoutingError (No route matches [POST] "/api/save-reply/2"):
+  
+Started GET "/api/posts/1" for 127.0.0.1 at 2023-08-02 21:52:51 -0400
+Processing by Api::PostsController#show as */*
+  Parameters: {"id"=>"1"}
+  [1m[36mPost Load (103.6ms)[0m  [1m[34mSELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT $2[0m  [["id", 1], ["LIMIT", 1]]
+  ↳ app/controllers/api/posts_controller.rb:14:in `show'
+Completed 404 Not Found in 867ms (Views: 0.3ms | ActiveRecord: 627.8ms | Allocations: 9065)
+
+
+Started POST "/api/posts" for 127.0.0.1 at 2023-08-02 21:53:13 -0400
+Processing by Api::PostsController#create as */*
+  Parameters: {"title"=>"Test Post", "body"=>"The body of the post", "post"=>{"title"=>"Test Post", "body"=>"The body of the post"}}
+[31mUnpermitted parameter: :post. Context: { controller: Api::PostsController, action: create, request: #<ActionDispatch::Request:0x00007fa7c04b6ee0>, params: {"title"=>"Test Post", "body"=>"The body of the post", "controller"=>"api/posts", "action"=>"create", "post"=>{"title"=>"Test Post", "body"=>"The body of the post"}} }[0m
+  [1m[36mTRANSACTION (104.1ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/posts_controller.rb:18:in `create'
+  [1m[36mPost Create (104.6ms)[0m  [1m[32mINSERT INTO "posts" ("title", "body", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["title", "Test Post"], ["body", "The body of the post"], ["created_at", "2023-08-03 01:53:14.084403"], ["updated_at", "2023-08-03 01:53:14.084403"]]
+  ↳ app/controllers/api/posts_controller.rb:18:in `create'
+  [1m[36mTRANSACTION (104.1ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/posts_controller.rb:18:in `create'
+Completed 201 Created in 327ms (Views: 0.4ms | ActiveRecord: 312.8ms | Allocations: 6437)
+
+
+Started POST "/api/posts/1" for 127.0.0.1 at 2023-08-02 21:53:22 -0400
+  
+ActionController::RoutingError (No route matches [POST] "/api/posts/1"):
+  
+Started POST "/api/posts/3" for 127.0.0.1 at 2023-08-02 21:53:26 -0400
+  
+ActionController::RoutingError (No route matches [POST] "/api/posts/3"):
+  
+Started GET "/api/posts/3" for 127.0.0.1 at 2023-08-02 21:53:59 -0400
+Processing by Api::PostsController#show as */*
+  Parameters: {"id"=>"3"}
+  [1m[36mPost Load (106.7ms)[0m  [1m[34mSELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/controllers/api/posts_controller.rb:14:in `show'
+  [1m[36mReply Load (109.3ms)[0m  [1m[34mSELECT "replies".* FROM "replies" WHERE "replies"."post_id" = $1[0m  [["post_id", 3]]
+  ↳ app/controllers/api/posts_controller.rb:14:in `show'
+Completed 200 OK in 706ms (Views: 0.4ms | ActiveRecord: 321.5ms | Allocations: 7285)
+
+
+Started GET "/api/posts" for 127.0.0.1 at 2023-08-02 21:54:18 -0400
+Processing by Api::PostsController#index as */*
+  [1m[36mPost Load (104.6ms)[0m  [1m[34mSELECT "posts".* FROM "posts" ORDER BY "posts"."created_at" DESC[0m
+  ↳ app/controllers/api/posts_controller.rb:10:in `index'
+  [1m[36mReply Load (105.1ms)[0m  [1m[34mSELECT "replies".* FROM "replies" WHERE "replies"."post_id" IN ($1, $2)[0m  [["post_id", 3], ["post_id", 2]]
+  ↳ app/controllers/api/posts_controller.rb:10:in `index'
+Completed 200 OK in 438ms (Views: 17.8ms | ActiveRecord: 314.3ms | Allocations: 4920)
+
+
+Started PUT "/api/posts/3" for 127.0.0.1 at 2023-08-02 21:54:45 -0400
+Processing by Api::PostsController#update as */*
+  Parameters: {"title"=>"Edited Title", "body"=>"Edited body......", "id"=>"3", "post"=>{"title"=>"Edited Title", "body"=>"Edited body......"}}
+  [1m[36mPost Load (104.5ms)[0m  [1m[34mSELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/controllers/api/posts_controller.rb:23:in `update'
+[31mUnpermitted parameters: :id, :post. Context: { controller: Api::PostsController, action: update, request: #<ActionDispatch::Request:0x00007fa7c037f180>, params: {"title"=>"Edited Title", "body"=>"Edited body......", "controller"=>"api/posts", "action"=>"update", "id"=>"3", "post"=>{"title"=>"Edited Title", "body"=>"Edited body......"}} }[0m
+  [1m[36mTRANSACTION (103.4ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/posts_controller.rb:24:in `update'
+  [1m[36mPost Update (109.7ms)[0m  [1m[33mUPDATE "posts" SET "title" = $1, "body" = $2, "updated_at" = $3 WHERE "posts"."id" = $4[0m  [["title", "Edited Title"], ["body", "Edited body......"], ["updated_at", "2023-08-03 01:54:45.418280"], ["id", 3]]
+  ↳ app/controllers/api/posts_controller.rb:24:in `update'
+  [1m[36mTRANSACTION (109.3ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/posts_controller.rb:24:in `update'
+Completed 200 OK in 539ms (Views: 0.3ms | ActiveRecord: 426.9ms | Allocations: 3084)
+
+
+Started GET "/api/posts/3" for 127.0.0.1 at 2023-08-02 21:54:55 -0400
+Processing by Api::PostsController#show as */*
+  Parameters: {"id"=>"3"}
+  [1m[36mPost Load (103.4ms)[0m  [1m[34mSELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/controllers/api/posts_controller.rb:14:in `show'
+  [1m[36mReply Load (103.4ms)[0m  [1m[34mSELECT "replies".* FROM "replies" WHERE "replies"."post_id" = $1[0m  [["post_id", 3]]
+  ↳ app/controllers/api/posts_controller.rb:14:in `show'
+Completed 200 OK in 314ms (Views: 0.4ms | ActiveRecord: 206.8ms | Allocations: 1643)
+
+
+Started DELETE "/api/posts/3" for 127.0.0.1 at 2023-08-02 21:55:05 -0400
+Processing by Api::PostsController#destroy as */*
+  Parameters: {"id"=>"3"}
+  [1m[36mPost Load (103.4ms)[0m  [1m[34mSELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/controllers/api/posts_controller.rb:30:in `destroy'
+  [1m[36mTRANSACTION (103.6ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/posts_controller.rb:30:in `destroy'
+  [1m[36mReply Load (103.6ms)[0m  [1m[34mSELECT "replies".* FROM "replies" WHERE "replies"."post_id" = $1[0m  [["post_id", 3]]
+  ↳ app/controllers/api/posts_controller.rb:30:in `destroy'
+  [1m[36mPost Destroy (103.7ms)[0m  [1m[31mDELETE FROM "posts" WHERE "posts"."id" = $1[0m  [["id", 3]]
+  ↳ app/controllers/api/posts_controller.rb:30:in `destroy'
+  [1m[36mTRANSACTION (104.0ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/posts_controller.rb:30:in `destroy'
+Completed 200 OK in 634ms (Views: 0.2ms | ActiveRecord: 518.3ms | Allocations: 4127)
+
+
+Started GET "/api/posts" for 127.0.0.1 at 2023-08-02 21:55:24 -0400
+Processing by Api::PostsController#index as */*
+  [1m[36mPost Load (104.0ms)[0m  [1m[34mSELECT "posts".* FROM "posts" ORDER BY "posts"."created_at" DESC[0m
+  ↳ app/controllers/api/posts_controller.rb:10:in `index'
+  [1m[36mReply Load (104.3ms)[0m  [1m[34mSELECT "replies".* FROM "replies" WHERE "replies"."post_id" = $1[0m  [["post_id", 2]]
+  ↳ app/controllers/api/posts_controller.rb:10:in `index'
+Completed 200 OK in 318ms (Views: 3.9ms | ActiveRecord: 208.3ms | Allocations: 1873)
+
+
+Started POST "/api/save-reply/2" for 127.0.0.1 at 2023-08-02 21:55:32 -0400
+  
+ActionController::RoutingError (No route matches [POST] "/api/save-reply/2"):
+  
+Started POST "/api/posts/2/replies" for 127.0.0.1 at 2023-08-02 21:57:17 -0400
+Processing by Api::RepliesController#create as */*
+  Parameters: {"content"=>"the first reply", "post_id"=>"2", "reply"=>{"content"=>"the first reply"}}
+  [1m[36mPost Load (104.2ms)[0m  [1m[34mSELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/api/replies_controller.rb:46:in `set_post'
+[31mUnpermitted parameters: :post_id, :reply. Context: { controller: Api::RepliesController, action: create, request: #<ActionDispatch::Request:0x00007fa7c02bda08>, params: {"content"=>"the first reply", "controller"=>"api/replies", "action"=>"create", "post_id"=>"2", "reply"=>{"content"=>"the first reply"}} }[0m
+  [1m[36mTRANSACTION (104.2ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/replies_controller.rb:14:in `create'
+  [1m[36mReply Create (104.0ms)[0m  [1m[32mINSERT INTO "replies" ("content", "post_id", "created_at", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["content", "the first reply"], ["post_id", 2], ["created_at", "2023-08-03 01:57:17.699500"], ["updated_at", "2023-08-03 01:57:17.699500"]]
+  ↳ app/controllers/api/replies_controller.rb:14:in `create'
+  [1m[36mTRANSACTION (104.6ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/replies_controller.rb:14:in `create'
+Completed 200 OK in 530ms (Views: 0.4ms | ActiveRecord: 417.0ms | Allocations: 3324)
+
+
+Started GET "/api/posts/2/replies" for 127.0.0.1 at 2023-08-02 21:57:35 -0400
+Processing by Api::RepliesController#index as */*
+  Parameters: {"post_id"=>"2"}
+  [1m[36mPost Load (104.5ms)[0m  [1m[34mSELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/api/replies_controller.rb:46:in `set_post'
+  [1m[36mReply Load (104.5ms)[0m  [1m[34mSELECT "replies".* FROM "replies" WHERE "replies"."post_id" = $1[0m  [["post_id", 2]]
+  ↳ app/controllers/api/replies_controller.rb:24:in `index'
+Completed 200 OK in 318ms (Views: 2.2ms | ActiveRecord: 209.0ms | Allocations: 1502)
+
+
+Started PUT "/api/posts/replies" for 127.0.0.1 at 2023-08-02 21:57:52 -0400
+Processing by Api::PostsController#update as */*
+  Parameters: {"content"=>"edited reply", "id"=>"replies", "post"=>{}}
+  [1m[36mPost Load (103.5ms)[0m  [1m[34mSELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT $2[0m  [["id", nil], ["LIMIT", 1]]
+  ↳ app/controllers/api/posts_controller.rb:23:in `update'
+Completed 404 Not Found in 210ms (Views: 0.1ms | ActiveRecord: 103.5ms | Allocations: 577)
+
+
+Started PUT "/api/replies/3" for 127.0.0.1 at 2023-08-02 21:58:18 -0400
+Processing by Api::RepliesController#update as */*
+  Parameters: {"content"=>"edited reply", "id"=>"3", "reply"=>{"content"=>"edited reply"}}
+  [1m[36mReply Load (104.2ms)[0m  [1m[34mSELECT "replies".* FROM "replies" WHERE "replies"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/controllers/api/replies_controller.rb:50:in `set_reply'
+[31mUnpermitted parameters: :id, :reply. Context: { controller: Api::RepliesController, action: update, request: #<ActionDispatch::Request:0x00007fa7c02620b8>, params: {"content"=>"edited reply", "controller"=>"api/replies", "action"=>"update", "id"=>"3", "reply"=>{"content"=>"edited reply"}} }[0m
+  [1m[36mTRANSACTION (104.8ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/replies_controller.rb:32:in `update'
+  [1m[36mPost Load (103.4ms)[0m  [1m[34mSELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/api/replies_controller.rb:32:in `update'
+  [1m[36mReply Update (103.6ms)[0m  [1m[33mUPDATE "replies" SET "content" = $1, "updated_at" = $2 WHERE "replies"."id" = $3[0m  [["content", "edited reply"], ["updated_at", "2023-08-03 01:58:19.423981"], ["id", 3]]
+  ↳ app/controllers/api/replies_controller.rb:32:in `update'
+  [1m[36mTRANSACTION (103.9ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/replies_controller.rb:32:in `update'
+Completed 200 OK in 745ms (Views: 0.3ms | ActiveRecord: 519.9ms | Allocations: 3939)
+
+
+Started GET "/api/posts/2/replies" for 127.0.0.1 at 2023-08-02 21:58:32 -0400
+Processing by Api::RepliesController#index as */*
+  Parameters: {"post_id"=>"2"}
+  [1m[36mPost Load (104.1ms)[0m  [1m[34mSELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/api/replies_controller.rb:46:in `set_post'
+  [1m[36mReply Load (104.2ms)[0m  [1m[34mSELECT "replies".* FROM "replies" WHERE "replies"."post_id" = $1[0m  [["post_id", 2]]
+  ↳ app/controllers/api/replies_controller.rb:24:in `index'
+Completed 200 OK in 318ms (Views: 2.3ms | ActiveRecord: 208.3ms | Allocations: 1484)
+
+
+Started GET "/api/reply/2" for 127.0.0.1 at 2023-08-02 21:58:42 -0400
+  
+ActionController::RoutingError (No route matches [GET] "/api/reply/2"):
+  
+Started GET "/api/replies" for 127.0.0.1 at 2023-08-02 21:58:46 -0400
+  
+ActionController::RoutingError (No route matches [GET] "/api/replies"):
+  
+Started GET "/api/replies/3" for 127.0.0.1 at 2023-08-02 21:58:49 -0400
+Processing by Api::RepliesController#show as */*
+  Parameters: {"id"=>"3"}
+  [1m[36mReply Load (104.0ms)[0m  [1m[34mSELECT "replies".* FROM "replies" WHERE "replies"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/controllers/api/replies_controller.rb:50:in `set_reply'
+Completed 200 OK in 211ms (Views: 0.4ms | ActiveRecord: 104.0ms | Allocations: 675)
+
+
+Started DELETE "/api/replies/3" for 127.0.0.1 at 2023-08-02 21:58:58 -0400
+Processing by Api::RepliesController#destroy as */*
+  Parameters: {"id"=>"3"}
+  [1m[36mReply Load (103.6ms)[0m  [1m[34mSELECT "replies".* FROM "replies" WHERE "replies"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/controllers/api/replies_controller.rb:50:in `set_reply'
+  [1m[36mTRANSACTION (103.3ms)[0m  [1m[35mBEGIN[0m
+  ↳ app/controllers/api/replies_controller.rb:40:in `destroy'
+  [1m[36mReply Destroy (105.8ms)[0m  [1m[31mDELETE FROM "replies" WHERE "replies"."id" = $1[0m  [["id", 3]]
+  ↳ app/controllers/api/replies_controller.rb:40:in `destroy'
+  [1m[36mTRANSACTION (105.3ms)[0m  [1m[35mCOMMIT[0m
+  ↳ app/controllers/api/replies_controller.rb:40:in `destroy'
+Completed 200 OK in 527ms (Views: 0.1ms | ActiveRecord: 418.0ms | Allocations: 2006)
+
+
+Started GET "/api/posts/2/replies" for 127.0.0.1 at 2023-08-02 21:59:05 -0400
+Processing by Api::RepliesController#index as */*
+  Parameters: {"post_id"=>"2"}
+  [1m[36mPost Load (104.4ms)[0m  [1m[34mSELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT $2[0m  [["id", 2], ["LIMIT", 1]]
+  ↳ app/controllers/api/replies_controller.rb:46:in `set_post'
+  [1m[36mReply Load (103.5ms)[0m  [1m[34mSELECT "replies".* FROM "replies" WHERE "replies"."post_id" = $1[0m  [["post_id", 2]]
+  ↳ app/controllers/api/replies_controller.rb:24:in `index'
+Completed 200 OK in 315ms (Views: 2.0ms | ActiveRecord: 207.9ms | Allocations: 1397)
+
+
+Started DELETE "/api/replies/3" for 127.0.0.1 at 2023-08-02 21:59:17 -0400
+Processing by Api::RepliesController#destroy as */*
+  Parameters: {"id"=>"3"}
+  [1m[36mReply Load (103.9ms)[0m  [1m[34mSELECT "replies".* FROM "replies" WHERE "replies"."id" = $1 LIMIT $2[0m  [["id", 3], ["LIMIT", 1]]
+  ↳ app/controllers/api/replies_controller.rb:50:in `set_reply'
+Completed 404 Not Found in 211ms (Views: 0.1ms | ActiveRecord: 103.9ms | Allocations: 571)
+
+
