@@ -6,3 +6,4 @@ Rails.application.routes.draw do
     resources :replies, only: [:show, :update, :destroy]
   end
 end
+

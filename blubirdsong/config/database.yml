@@ -36,3 +36,4 @@ production:
   database: olivdb
   username: blogs
   password: <%= ENV["BLOGS_DATABASE_PASSWORD"] %>
+

@@ -1,5 +1,6 @@
 module Api
     class PostsController < ApplicationController
+        before_action :set_post, only: [:show, :update, :destroy]
         # Exception Handling Start
         rescue_from ActiveRecord::RecordNotFound, with: :render_not_found_response
         rescue_from ActiveRecord::RecordInvalid, with: :render_unprocessable_entity_response
@@ -20,22 +21,30 @@ module Api
         end
 
         def update
-            post = Post.find(params[:id])
-            post.update!(post_params)
+            # post = Post.find(params[:id]) - not needed because of before_action
+            @post.update!(post_params)
             render json: { message: "Post Edited successfully" }, status: :ok
-
-          end
+        end
 
         def destroy
-            Post.find(params[:id]).destroy
+            @post.destroy
+            # Post.find(params[:id]).destroy - not needed because of before_action
             render json: { message: "Post Deleted successfully" }, status: :ok
         end
-        
+ 
         private
         
         def post_params
-            params.permit(:title, :body)
+            params.permit(:subject, :body)
         end
+
+        def set_post
+            @post = Post.find_by(id: params[:id])
+            return if @post.present?
+
+            render json: { message: "No post found with specified id = #{params[:id]}" }, status: :not_found  
+        end
+
         # Exception Handling Methods Start
         def render_not_found_response
             render json: { error: "Post Not Found" }, status: :not_found
