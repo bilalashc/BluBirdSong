@@ -2618,3 +2618,11 @@ Processing by Api::RepliesController#index as */*
 Completed 200 OK in 1082ms (Views: 7.4ms | ActiveRecord: 938.2ms | Allocations: 10822)
 
 
+Started GET "/" for 127.0.0.1 at 2023-08-03 13:15:23 -0400
+  [1m[36mActiveRecord::SchemaMigration Pluck (101.8ms)[0m  [1m[34mSELECT "schema_migrations"."version" FROM "schema_migrations" ORDER BY "schema_migrations"."version" ASC[0m
+Processing by Rails::WelcomeController#index as HTML
+  Rendering /home/bilal/.rbenv/versions/3.1.1/lib/ruby/gems/3.1.0/gems/railties-7.0.6/lib/rails/templates/rails/welcome/index.html.erb
+  Rendered /home/bilal/.rbenv/versions/3.1.1/lib/ruby/gems/3.1.0/gems/railties-7.0.6/lib/rails/templates/rails/welcome/index.html.erb (Duration: 1.4ms | Allocations: 584)
+Completed 200 OK in 14ms (Views: 5.9ms | ActiveRecord: 0.0ms | Allocations: 4885)
+
+
