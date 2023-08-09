@@ -60,7 +60,7 @@ module Api
         end
     
         def reply_params
-            params.permit(:content, :parent_reply_id)
+            params.permit(:content, :post_id, :parent_reply_id)
         end
 
 

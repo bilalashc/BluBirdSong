@@ -18,22 +18,20 @@ default: &default
   adapter: postgresql
   encoding: unicode
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
-  host: july25export.c8zxpiwl6bkl.eu-central-1.rds.amazonaws.com
-  port: 5432
   database: my_remote_db
-  username: olivdbusr
-  password: postgres
+  username: bilal
+  password: 
 
 development:
   <<: *default
-  database: olivdb
+  database: blubirdsong
 test:
   <<: *default
-  database: olivdb
+  database: blubirdsong
 
 production:
   <<: *default
-  database: olivdb
+  database: blubirdsong
   username: blogs
   password: <%= ENV["BLOGS_DATABASE_PASSWORD"] %>
 
